@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FaWhatsapp, FaFilter, FaSearch, FaRupeeSign, FaShoppingCart } from 'react-icons/fa';
 import axios from '../config/axios';
 import { useAuth } from '../context/AuthContext';
@@ -17,10 +17,19 @@ const Products = () => {
   
   const { user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+    
+    // Check for category parameter in URL
+    const params = new URLSearchParams(location.search);
+    const categoryParam = params.get('category');
+    if (categoryParam) {
+      setCategoryFilter(categoryParam);
+      setIsFilterOpen(true);
+    }
+  }, [location.search]);
 
   const fetchProducts = async () => {
     try {
@@ -77,7 +86,8 @@ const Products = () => {
     { value: 'ethnic', label: 'Ethnic Wear' },
     { value: 'shirt', label: 'Shirts' },
     { value: 'indowest', label: 'Indo-western' },
-    { value: 'dress', label: 'Dresses' }
+    { value: 'dress', label: 'Dresses' },
+    { value: 'kids', label: 'Kids' }
   ];
 
   const priceRanges = [
