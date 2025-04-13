@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impatient Pink</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Full height of the viewport */
+            padding: 2cm; /* This adds the 2cm margin on all sides */
+            box-sizing: border-box; /* Makes sure padding doesn't affect image size */
+            background-color: #fff; /* Optional, just for a clean background */
+            overflow: hidden; /* Ensures no overflow outside container */
+        }
+
+        .hero-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;  /* Ensures the image covers the area and maintains aspect ratio */
+          max-width: calc(100% - 0.1%); /* 4cm (2cm margin on each side) */
+          /* max-height: 100vh; Adjusts for height */
+        }
+
+        /* Responsive Design: On smaller screens, reduce margins */
+        @media (max-width: 768px) {
+        .hero-image {
+            padding: 1cm; /* Less margin on smaller screens */
+        }
+
+        .hero-img {
+          max-width: calc(100% - 0.1%); /* Adjust the max width to reduce margin */
+        }
+        }
+
+        .hero-section {
+            position: relative;
+            background-image: url('{{ url_for("static", filename="images/hero-bg.jpg") }}');
+            background-size: cover;
+            background-position: center;
+            height: 65vh;  /* Reduce height to make the section more compact */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            filter: brightness(70%);
+            padding-top: 10px;  /* Reduce the top padding */
+            padding-bottom: 15px;  /* Reduce the bottom padding */
+        }
+        .hero-content {
+            z-index: 1;
+        }
+        .hero-title {
+            font-size: 3.5rem; /* Slightly smaller text size */
+            font-weight: bold;
+            margin-bottom: 15px;  /* Reduced space between headline and button */
+        }
+        .hero-button {
+            padding: 17px 25px;  /* Reduced padding */
+            background-color: #e96989; /* Deep Blush Pink */
+            border: none;
+            font-size: 1.2rem;
+            color: rgb(18, 14, 14);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .hero-button:hover {
+            background-color: #e9698999; /* Slight hover effect */
+        }
+
+        /* Adjusting the spacing between sections */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 3rem;  /* Reduce padding to bring gallery closer */
+        }
+
+        /* Top Bar Navigation */
+        .top-bar {
+            background-color: #e96989; /* Deep Blush Pink */
+            color: white;
+            padding: 10px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 9999;
+        }
+        .top-bar nav a {
+            color: white;
+            margin: 0 20px;
+            font-size: 1.1rem;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .top-bar nav a:hover {
+            color: #fff6f6;
+        }
+
+        /* Image Gallery */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 4rem;
+        }
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item .gallery-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 1.5rem;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .gallery-text {
+            opacity: 1;
+        }
+
+        /* Brand Message Section */
+        .brand-message {
+            background-color: #f9f9f9;
+            padding: 4rem;
+            text-align: center;
+        }
+        .brand-message h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .brand-message p {
+            font-size: 1.2rem;
+            color: #555;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 4rem;
+            background-color: #fafafa;
+        }
+        .testimonial-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 1.5rem;  /* Space between reviews */
+        }
+        .testimonial-item:hover {
+            transform: translateY(-10px);
+        }
+        .testimonial-item h3 {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        .testimonial-item p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+        .footer a:hover {
+            color: #e96989; /* Deep Blush Pink */
+        }
+        /* Fade-in effect for sections */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Reverse fade-in effect */
+        .fade-in-reverse {
+            opacity: 0;
+            transform: translateY(-30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .fade-in-reverse.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Contact Section Styling */
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            transition: transform 0.3s ease;
+        }
+        .contact-item:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Icon Styling */
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .icon-container:hover {
+            background-color: #e96989; /* Deep Blush */
+        }
+
+        
+    </style>
+</head>
+<body class="font-sans">
+
+    <!-- Top Bar Navigation -->
+    <section class="top-bar">
+        <div class="container mx-auto flex justify-between items-center">
+            <nav>
+                <a href="#home">Home</a>
+                <a href="#about">About</a>
+                <a href="#order-status">Order Status</a> <!-- Added Order Status link -->
+                <a href="/products">Products</a> <!-- Added Products link -->
+                <a href="#contact">Contact</a>
+                <a href="/login" class="hover:text-gray-300 ml-auto">Admin Login</a>
+
+            </nav>
+        </div>
+    </section>
+
+    <!-- Hero Image Section -->
+    <section class="hero-image">
+        <div class="container">
+        <img src="{{ url_for('static', filename='images/heroposter.jpg') }}" alt="Impatient Pink Cover" class="hero-img">
+        </div>
+    </section>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Want to get your fits in check?</h1>
+            <a href="https://wa.me/919818405428?text=Hey%20Shivani,%20checked%20out%20your%20website,%20would%20love%20to%20connect%20for%20a%20fit%20I%20have%20in%20mind." 
+            target="_blank" class="hero-button">
+            Contact Us on WhatsApp
+            </a>   
+        </div>
+    </section>
+
+    <!-- Interactive Image Gallery -->
+    <section class="gallery" id="gallery">
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/product1.jpg') }}" alt="Product 1" class="gallery-img">
+            <div class="gallery-text">For Kids</div>
+        </div>
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/blacksaree.jpg') }}" alt="Product 2" class="gallery-img">
+            <div class="gallery-text">Ethnic Wear</div>
+        </div>
+        <div class="gallery-item">
+            <img src="{{ url_for('static', filename='images/blueshirt.jpg') }}" alt="Product 3" class="gallery-img">
+            <div class="gallery-text">Formal Wear</div>
+        </div>
+    </section>
+    <!-- About Us Section -->
+    <section id="about" class="py-16 bg-white">
+        <!-- Company Story -->
+        <div class="container mx-auto flex items-center justify-between space-x-8 fade-in">
+            <div class="w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">How Impatient Pink Started</h2>
+                <p class="text-gray-600 text-lg">
+                    Impatient Pink was born from a passion for unique, trend-setting fashion. Built for bold individuals, the brand redefines modern style with an artistic edge.
+                </p>
+            </div>
+            <div class="w-1/2 flex justify-center">
+                <img src="{{ url_for('static', filename='images/logo.jpeg') }}" alt="Impatient Pink Logo" class="w-48">
+            </div>
+        </div>
+
+        <!-- Founder Section -->
+        <div class="container mx-auto flex items-center justify-between space-x-8 mt-16 fade-in-reverse">
+            <div class="w-1/2 flex justify-center">
+                <img src="{{ url_for('static', filename='images/founder.jpg') }}" alt="Shivani Gambhir" class="w-64 rounded-lg shadow-lg">
+            </div>
+            <div class="w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Meet the Founder: Shivani Gambhir</h2>
+                <p class="text-gray-600 text-lg">
+                    A NIFT graduate with an eye for detail, Shivani Gambhir founded Impatient Pink to bring creative, fashion-forward designs to life. Her journey started from the vibrant world of fashion school to building a brand that speaks individuality.
+                </p>
+            </div>
+        </div>
+
+        <!-- Manager Section -->
+        <div class="container mx-auto flex items-center justify-between space-x-8 mt-16 fade-in">
+            <div class="w-1/2">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Co-Founder: Suman Saluja</h2>
+                <p class="text-gray-600 text-lg">
+                    Suman Saluja, Shivani’s mother, built her fashion career from an at-home retail studio to managing the business operations of Impatient Pink. Her experience blends creativity with business strategy, making the brand flourish.
+                </p>
+            </div>
+            <div class="w-1/2 flex justify-center">
+                <img src="{{ url_for('static', filename='images/founder2.jpg') }}" alt="Suman Saluja" class="w-64 rounded-lg shadow-lg">
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Message Section -->
+    <section class="brand-message">
+        <h2>Why Choose Impatient Pink?</h2>
+        <p>We create fashionable pieces that are perfect for every occasion. From casual wear to formal attire, our collection is designed to suit your unique style and personality.</p>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="testimonial-item">
+            <h3>“This Mom Duo always gives life to the vibe in my mind”</h3>
+            <p>- Riya, Customer</p>
+        </div>
+        <div class="testimonial-item">
+            <h3>“Can't find this level of personalisation anywhere else, highly recommend!”</h3>
+            <p>- Saloni, Customer</p>
+        </div>
+        <div class="testimonial-item">
+            <h3>“Impatient Pink always keeps me on trend!”</h3>
+            <p>- Priya, Customer</p>
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact" class="bg-white py-16">
+        <div class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Get in Touch</h2>
+            <p class="text-lg text-gray-600 mb-8">We’d love to hear from you! Connect with us on Instagram or send us an email.</p>
+
+            <!-- Contact Options -->
+            <div class="flex justify-center space-x-8">
+                <!-- Instagram -->
+                <a href="https://www.instagram.com/impatientpink/" target="_blank" class="contact-item">
+                    <div class="icon-container bg-pink-500">
+                        <img src="{{ url_for('static', filename='images/instagram.svg') }}" alt="Instagram" class="w-8">
+                    </div>
+                    <p class="text-pink-500 text-lg mt-2">@impatientpink</p>
+                </a>
+
+                <!-- Email -->
+                <a href="mailto:impatientpink@gmail.com" class="contact-item">
+                    <div class="icon-container bg-pink-500">
+                        <img src="{{ url_for('static', filename='images/email.svg') }}" alt="Email" class="w-8">
+                    </div>
+                    <p class="text-pink-500 text-lg mt-2">impatientpink@gmail.com</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 Impatient Pink. All rights reserved.</p>
+        <p>
+            <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | <a href="#">FAQ</a>
+        </p>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(".fade-in, .fade-in-reverse");
+        
+            function checkScroll() {
+                elements.forEach((el) => {
+                    const position = el.getBoundingClientRect().top;
+                    const screenHeight = window.innerHeight;
+                    if (position < screenHeight * 0.85) {
+                        el.classList.add("visible");
+                    }
+                });
+            }
+        
+            window.addEventListener("scroll", checkScroll);
+            checkScroll();
+        });
+        </script>
+        
+</body>
+</html>

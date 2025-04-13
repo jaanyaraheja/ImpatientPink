@@ -1,0 +1,92 @@
+{
+  "products": [
+    {
+      "_id": "65f2d1234567890123456789",
+      "name": "Floral Embroidered Anarkali",
+      "description": "Beautiful hand-embroidered anarkali suit with floral patterns",
+      "price": 4999,
+      "image": "https://images.pexels.com/photos/1926769/pexels-photo-1926769.jpeg",
+      "category": "ethnic",
+      "trending": true,
+      "new": false,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456790",
+      "name": "Modern Co-ord Set",
+      "description": "Stylish co-ord set perfect for casual outings",
+      "price": 2999,
+      "image": "https://images.pexels.com/photos/1390600/pexels-photo-1390600.jpeg",
+      "category": "co-ords",
+      "trending": false,
+      "new": true,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456791",
+      "name": "Designer Silk Saree",
+      "description": "Elegant silk saree with traditional designs",
+      "price": 8999,
+      "image": "https://images.pexels.com/photos/2235071/pexels-photo-2235071.jpeg",
+      "category": "ethnic",
+      "trending": true,
+      "new": false,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456792",
+      "name": "Formal Blazer Set",
+      "description": "Professional blazer set for workplace",
+      "price": 5999,
+      "image": "https://images.pexels.com/photos/2466756/pexels-photo-2466756.jpeg",
+      "category": "formal",
+      "trending": false,
+      "new": false,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456793",
+      "name": "Printed Kurti",
+      "description": "Comfortable daily wear printed kurti",
+      "price": 1499,
+      "image": "https://images.pexels.com/photos/1078958/pexels-photo-1078958.jpeg",
+      "category": "kurti",
+      "trending": false,
+      "new": true,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456794",
+      "name": "Indo-Western Gown",
+      "description": "Fusion wear gown with modern touches",
+      "price": 6999,
+      "image": "https://images.pexels.com/photos/1755428/pexels-photo-1755428.jpeg",
+      "category": "indowest",
+      "trending": true,
+      "new": true,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456795",
+      "name": "Palazzo Set",
+      "description": "Comfortable and stylish palazzo set",
+      "price": 2499,
+      "image": "https://images.pexels.com/photos/2043590/pexels-photo-2043590.jpeg",
+      "category": "co-ords",
+      "trending": false,
+      "new": false,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    },
+    {
+      "_id": "65f2d1234567890123456796",
+      "name": "Designer Lehenga",
+      "description": "Heavy embroidered party wear lehenga",
+      "price": 15999,
+      "image": "https://images.pexels.com/photos/2229490/pexels-photo-2229490.jpeg",
+      "category": "ethnic",
+      "trending": true,
+      "new": false,
+      "createdAt": "2024-03-14T10:00:00.000Z"
+    }
+  ]
+} 
